@@ -549,6 +549,31 @@ code {
   font-size: 0.9rem;
 }
 
+.site-footer__card {
+  padding: 16px;
+}
+
+.license-block {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 8px;
+}
+
+.license-block img {
+  width: 88px;
+  height: 31px;
+}
+
+.license-block p {
+  margin: 0;
+}
+
+.license-block a {
+  color: var(--accent);
+}
+
 .lightbox {
   position: fixed;
   inset: 0;
