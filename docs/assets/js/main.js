@@ -99,8 +99,10 @@
     if (type === 'video') {
       lightboxImage.hidden = true;
       lightboxImage.removeAttribute('src');
+      lightboxImage.style.display = 'none';
 
       lightboxVideo.hidden = false;
+      lightboxVideo.style.display = 'block';
       lightboxVideo.setAttribute('src', src || '');
       if (poster) {
         lightboxVideo.setAttribute('poster', poster);
@@ -115,8 +117,10 @@
       lightboxVideo.hidden = true;
       lightboxVideo.removeAttribute('src');
       lightboxVideo.removeAttribute('poster');
+      lightboxVideo.style.display = 'none';
 
       lightboxImage.hidden = false;
+      lightboxImage.style.display = 'block';
       lightboxImage.setAttribute('src', src);
     }
 
@@ -135,11 +139,13 @@
 
     lightboxImage.removeAttribute('src');
     lightboxImage.hidden = true;
+    lightboxImage.style.display = 'none';
 
     lightboxVideo.pause();
     lightboxVideo.removeAttribute('src');
     lightboxVideo.removeAttribute('poster');
     lightboxVideo.hidden = true;
+    lightboxVideo.style.display = 'none';
 
     document.body.style.overflow = '';
   };

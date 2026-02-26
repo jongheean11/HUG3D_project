@@ -256,7 +256,9 @@ p {
 
 .mini-card img {
   aspect-ratio: 16 / 10;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
+  background: #f2f3f3;
 }
 
 .mini-card h3,
@@ -304,13 +306,19 @@ p {
 .comparison-row {
   display: grid;
   gap: 10px;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .comparison-row--bottom {
-  width: min(72%, 720px);
-  margin: 0 auto;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.comparison-row--bottom .engine-card {
+  flex: 0 1 calc((100% - 20px) / 3);
+  max-width: calc((100% - 20px) / 3);
 }
 
 .engine-card {
@@ -334,16 +342,6 @@ p {
   text-align: center;
 }
 
-.engine-card--placeholder {
-  display: grid;
-  align-content: center;
-  min-height: 190px;
-}
-
-.engine-card--placeholder h4 {
-  margin: 0;
-}
-
 .engine-card--ours {
   outline: 2px solid color-mix(in srgb, var(--accent) 60%, transparent);
 }
@@ -353,17 +351,6 @@ p {
   gap: 8px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: start;
-}
-
-.engine-media-grid--single {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.engine-media-grid--single::after {
-  content: "";
-  border-radius: 12px;
-  border: 1px solid transparent;
-  aspect-ratio: 4 / 5;
 }
 
 .demo-input {
@@ -426,6 +413,25 @@ p {
 
 .media-card--ours {
   outline: 2px solid color-mix(in srgb, var(--accent) 60%, transparent);
+}
+
+.media-card--empty {
+  cursor: default;
+  border-style: dashed;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--surface-2) 80%, transparent);
+}
+
+.media-card--empty::after {
+  display: none;
+}
+
+.media-card--empty span {
+  position: static;
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 0.94rem;
 }
 
 .two-row-demo {
@@ -573,7 +579,14 @@ code {
   }
 
   .comparison-row--bottom {
+    display: grid;
     width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .comparison-row--bottom .engine-card {
+    flex: initial;
+    max-width: none;
   }
 
   .two-row-demo {
@@ -601,6 +614,10 @@ code {
 
   .comparison-row,
   .figure-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .comparison-row--bottom {
     grid-template-columns: 1fr;
   }
 
