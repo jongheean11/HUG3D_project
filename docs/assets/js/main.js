@@ -151,13 +151,18 @@
   };
 
   document.querySelectorAll('.js-lightbox').forEach((node) => {
-    node.setAttribute('tabindex', '0');
-    node.setAttribute('role', 'button');
+    if (node.getAttribute('data-lb-type') !== 'video') {
+      node.setAttribute('tabindex', '0');
+      node.setAttribute('role', 'button');
+    }
   });
 
   document.addEventListener('click', (event) => {
     const trigger = event.target.closest('.js-lightbox');
     if (!trigger) {
+      return;
+    }
+    if (trigger.getAttribute('data-lb-type') === 'video') {
       return;
     }
     event.preventDefault();
@@ -168,6 +173,9 @@
   document.addEventListener('keydown', (event) => {
     const trigger = event.target.closest('.js-lightbox');
     if (!trigger) {
+      return;
+    }
+    if (trigger.getAttribute('data-lb-type') === 'video') {
       return;
     }
     if (event.key === 'Enter' || event.key === ' ') {
