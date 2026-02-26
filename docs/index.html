@@ -36,9 +36,7 @@
       <a href="#method">Method</a>
       <a href="#video-demos">Video</a>
       <a href="#figures">Figures</a>
-      <a href="#bibtex">BibTeX</a>
     </nav>
-    <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle color theme">Theme</button>
   </header>
 
   <main id="top">
@@ -144,12 +142,12 @@
     <section id="video-demos" class="section reveal">
       <h2>Video Comparisons</h2>
       <p class="section__lead">
-        Layout follows the comparison style in the provided presentation. Click any clip to play in a larger view.
+        Results are arranged by method from the provided PPT layout. Each method shows Tex and Geo outputs when available.
       </p>
 
-      <div class="demo-panel surface">
-        <h3>MultiHuman Benchmark Case</h3>
-        <div class="demo-layout">
+      <div class="comparison-board surface">
+        <h3>MultiHuman Dataset</h3>
+        <div class="comparison-layout">
           <figure class="demo-input js-lightbox"
                   data-lb-type="image"
                   data-lb-src="assets/img/image001.png"
@@ -157,76 +155,154 @@
             <img src="assets/img/image001.webp" alt="Input image for MultiHuman benchmark" loading="lazy">
             <figcaption>Input image</figcaption>
           </figure>
-          <div class="demo-grid">
-            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media001.mp4" data-lb-poster="assets/img/image002.webp" data-lb-caption="MultiHuman comparison clip 1.">
-              <img src="assets/img/image002.webp" alt="Comparison clip 1" loading="lazy"><span>Clip 01</span>
-            </article>
-            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media002.mp4" data-lb-poster="assets/img/image003.webp" data-lb-caption="MultiHuman comparison clip 2.">
-              <img src="assets/img/image003.webp" alt="Comparison clip 2" loading="lazy"><span>Clip 02</span>
-            </article>
-            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media003.mp4" data-lb-poster="assets/img/image004.webp" data-lb-caption="MultiHuman comparison clip 3.">
-              <img src="assets/img/image004.webp" alt="Comparison clip 3" loading="lazy"><span>Clip 03</span>
-            </article>
-            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media004.mp4" data-lb-poster="assets/img/image005.webp" data-lb-caption="MultiHuman comparison clip 4.">
-              <img src="assets/img/image005.webp" alt="Comparison clip 4" loading="lazy"><span>Clip 04</span>
-            </article>
-            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media005.mp4" data-lb-poster="assets/img/image006.webp" data-lb-caption="MultiHuman comparison clip 5.">
-              <img src="assets/img/image006.webp" alt="Comparison clip 5" loading="lazy"><span>Clip 05</span>
-            </article>
-            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media006.mp4" data-lb-poster="assets/img/image007.webp" data-lb-caption="MultiHuman comparison clip 6.">
-              <img src="assets/img/image007.webp" alt="Comparison clip 6" loading="lazy"><span>Clip 06</span>
-            </article>
-            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media007.mp4" data-lb-poster="assets/img/image008.webp" data-lb-caption="MultiHuman comparison clip 7.">
-              <img src="assets/img/image008.webp" alt="Comparison clip 7" loading="lazy"><span>Clip 07</span>
-            </article>
-            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media008.mp4" data-lb-poster="assets/img/image009.webp" data-lb-caption="MultiHuman comparison clip 8.">
-              <img src="assets/img/image009.webp" alt="Comparison clip 8" loading="lazy"><span>Clip 08</span>
-            </article>
-            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media009.mp4" data-lb-poster="assets/img/image010.webp" data-lb-caption="MultiHuman comparison clip 9.">
-              <img src="assets/img/image010.webp" alt="Comparison clip 9" loading="lazy"><span>Clip 09</span>
-            </article>
+
+          <div class="comparison-rows">
+            <div class="comparison-row">
+              <article class="engine-card engine-card--placeholder">
+                <h4>No texture</h4>
+                <p>No clip asset was included for this slot in the provided PPT media package.</p>
+              </article>
+
+              <article class="engine-card">
+                <h4>ECON</h4>
+                <div class="engine-media-grid engine-media-grid--single">
+                  <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media005.mp4" data-lb-poster="assets/img/image006.webp" data-lb-caption="MultiHuman: ECON (Geo).">
+                    <img src="assets/img/image006.webp" alt="ECON geo output" loading="lazy"><span>Geo</span>
+                  </article>
+                </div>
+              </article>
+
+              <article class="engine-card">
+                <h4>SiTH</h4>
+                <div class="engine-media-grid">
+                  <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media009.mp4" data-lb-poster="assets/img/image010.webp" data-lb-caption="MultiHuman: SiTH (Tex).">
+                    <img src="assets/img/image010.webp" alt="SiTH texture output" loading="lazy"><span>Tex</span>
+                  </article>
+                  <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media008.mp4" data-lb-poster="assets/img/image009.webp" data-lb-caption="MultiHuman: SiTH (Geo).">
+                    <img src="assets/img/image009.webp" alt="SiTH geometry output" loading="lazy"><span>Geo</span>
+                  </article>
+                </div>
+              </article>
+
+              <article class="engine-card">
+                <h4>SIFU</h4>
+                <div class="engine-media-grid">
+                  <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media002.mp4" data-lb-poster="assets/img/image003.webp" data-lb-caption="MultiHuman: SIFU (Tex).">
+                    <img src="assets/img/image003.webp" alt="SIFU texture output" loading="lazy"><span>Tex</span>
+                  </article>
+                  <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media001.mp4" data-lb-poster="assets/img/image002.webp" data-lb-caption="MultiHuman: SIFU (Geo).">
+                    <img src="assets/img/image002.webp" alt="SIFU geometry output" loading="lazy"><span>Geo</span>
+                  </article>
+                </div>
+              </article>
+            </div>
+
+            <div class="comparison-row comparison-row--bottom">
+              <article class="engine-card">
+                <h4>PSHuman</h4>
+                <div class="engine-media-grid">
+                  <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media007.mp4" data-lb-poster="assets/img/image008.webp" data-lb-caption="MultiHuman: PSHuman (Tex).">
+                    <img src="assets/img/image008.webp" alt="PSHuman texture output" loading="lazy"><span>Tex</span>
+                  </article>
+                  <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media006.mp4" data-lb-poster="assets/img/image007.webp" data-lb-caption="MultiHuman: PSHuman (Geo).">
+                    <img src="assets/img/image007.webp" alt="PSHuman geometry output" loading="lazy"><span>Geo</span>
+                  </article>
+                </div>
+              </article>
+
+              <article class="engine-card engine-card--ours">
+                <h4>HUG3D (Ours)</h4>
+                <div class="engine-media-grid">
+                  <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media004.mp4" data-lb-poster="assets/img/image005.webp" data-lb-caption="MultiHuman: HUG3D (Tex).">
+                    <img src="assets/img/image005.webp" alt="HUG3D texture output" loading="lazy"><span>Tex</span>
+                  </article>
+                  <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media003.mp4" data-lb-poster="assets/img/image004.webp" data-lb-caption="MultiHuman: HUG3D (Geo).">
+                    <img src="assets/img/image004.webp" alt="HUG3D geometry output" loading="lazy"><span>Geo</span>
+                  </article>
+                </div>
+              </article>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="demo-panel surface">
-        <h3>In-the-Wild Comparison Case</h3>
-        <div class="demo-layout">
+      <div class="comparison-board surface">
+        <h3>In-the-Wild Dataset</h3>
+        <div class="comparison-layout">
           <figure class="demo-input js-lightbox"
                   data-lb-type="image"
-                  data-lb-src="assets/img/image041.png"
+                  data-lb-src="assets/img/image050.webp"
                   data-lb-caption="Input image for in-the-wild comparison case.">
-            <img src="assets/img/image041.webp" alt="Input image for in-the-wild case" loading="lazy">
+            <img src="assets/img/image050.webp" alt="Input image for in-the-wild case" loading="lazy">
             <figcaption>Input image</figcaption>
           </figure>
-          <div class="demo-grid">
-            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media037.mp4" data-lb-poster="assets/img/image042.webp" data-lb-caption="In-the-wild comparison clip 1.">
-              <img src="assets/img/image042.webp" alt="In-the-wild clip 1" loading="lazy"><span>Clip 01</span>
-            </article>
-            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media038.mp4" data-lb-poster="assets/img/image043.webp" data-lb-caption="In-the-wild comparison clip 2.">
-              <img src="assets/img/image043.webp" alt="In-the-wild clip 2" loading="lazy"><span>Clip 02</span>
-            </article>
-            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media039.mp4" data-lb-poster="assets/img/image044.webp" data-lb-caption="In-the-wild comparison clip 3.">
-              <img src="assets/img/image044.webp" alt="In-the-wild clip 3" loading="lazy"><span>Clip 03</span>
-            </article>
-            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media040.mp4" data-lb-poster="assets/img/image045.webp" data-lb-caption="In-the-wild comparison clip 4.">
-              <img src="assets/img/image045.webp" alt="In-the-wild clip 4" loading="lazy"><span>Clip 04</span>
-            </article>
-            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media041.mp4" data-lb-poster="assets/img/image046.webp" data-lb-caption="In-the-wild comparison clip 5.">
-              <img src="assets/img/image046.webp" alt="In-the-wild clip 5" loading="lazy"><span>Clip 05</span>
-            </article>
-            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media042.mp4" data-lb-poster="assets/img/image047.webp" data-lb-caption="In-the-wild comparison clip 6.">
-              <img src="assets/img/image047.webp" alt="In-the-wild clip 6" loading="lazy"><span>Clip 06</span>
-            </article>
-            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media043.mp4" data-lb-poster="assets/img/image048.webp" data-lb-caption="In-the-wild comparison clip 7.">
-              <img src="assets/img/image048.webp" alt="In-the-wild clip 7" loading="lazy"><span>Clip 07</span>
-            </article>
-            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media044.mp4" data-lb-poster="assets/img/image049.webp" data-lb-caption="In-the-wild comparison clip 8.">
-              <img src="assets/img/image049.webp" alt="In-the-wild clip 8" loading="lazy"><span>Clip 08</span>
-            </article>
-            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media045.mp4" data-lb-poster="assets/img/image050.webp" data-lb-caption="In-the-wild comparison clip 9.">
-              <img src="assets/img/image050.webp" alt="In-the-wild clip 9" loading="lazy"><span>Clip 09</span>
-            </article>
+
+          <div class="comparison-rows">
+            <div class="comparison-row">
+              <article class="engine-card engine-card--placeholder">
+                <h4>No texture</h4>
+                <p>No clip asset was included for this slot in the provided PPT media package.</p>
+              </article>
+
+              <article class="engine-card">
+                <h4>ECON</h4>
+                <div class="engine-media-grid engine-media-grid--single">
+                  <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media045.mp4" data-lb-poster="assets/img/image049.webp" data-lb-caption="In-the-wild: ECON (Geo).">
+                    <img src="assets/img/image049.webp" alt="ECON geo output in the wild" loading="lazy"><span>Geo</span>
+                  </article>
+                </div>
+              </article>
+
+              <article class="engine-card">
+                <h4>SiTH</h4>
+                <div class="engine-media-grid">
+                  <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media044.mp4" data-lb-poster="assets/img/image048.webp" data-lb-caption="In-the-wild: SiTH (Tex).">
+                    <img src="assets/img/image048.webp" alt="SiTH texture output in the wild" loading="lazy"><span>Tex</span>
+                  </article>
+                  <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media043.mp4" data-lb-poster="assets/img/image047.webp" data-lb-caption="In-the-wild: SiTH (Geo).">
+                    <img src="assets/img/image047.webp" alt="SiTH geometry output in the wild" loading="lazy"><span>Geo</span>
+                  </article>
+                </div>
+              </article>
+
+              <article class="engine-card">
+                <h4>SIFU</h4>
+                <div class="engine-media-grid">
+                  <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media042.mp4" data-lb-poster="assets/img/image046.webp" data-lb-caption="In-the-wild: SIFU (Tex).">
+                    <img src="assets/img/image046.webp" alt="SIFU texture output in the wild" loading="lazy"><span>Tex</span>
+                  </article>
+                  <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media041.mp4" data-lb-poster="assets/img/image045.webp" data-lb-caption="In-the-wild: SIFU (Geo).">
+                    <img src="assets/img/image045.webp" alt="SIFU geometry output in the wild" loading="lazy"><span>Geo</span>
+                  </article>
+                </div>
+              </article>
+            </div>
+
+            <div class="comparison-row comparison-row--bottom">
+              <article class="engine-card">
+                <h4>PSHuman</h4>
+                <div class="engine-media-grid">
+                  <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media040.mp4" data-lb-poster="assets/img/image044.webp" data-lb-caption="In-the-wild: PSHuman (Tex).">
+                    <img src="assets/img/image044.webp" alt="PSHuman texture output in the wild" loading="lazy"><span>Tex</span>
+                  </article>
+                  <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media039.mp4" data-lb-poster="assets/img/image043.webp" data-lb-caption="In-the-wild: PSHuman (Geo).">
+                    <img src="assets/img/image043.webp" alt="PSHuman geometry output in the wild" loading="lazy"><span>Geo</span>
+                  </article>
+                </div>
+              </article>
+
+              <article class="engine-card engine-card--ours">
+                <h4>HUG3D (Ours)</h4>
+                <div class="engine-media-grid">
+                  <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media038.mp4" data-lb-poster="assets/img/image042.webp" data-lb-caption="In-the-wild: HUG3D (Tex).">
+                    <img src="assets/img/image042.webp" alt="HUG3D texture output in the wild" loading="lazy"><span>Tex</span>
+                  </article>
+                  <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media037.mp4" data-lb-poster="assets/img/image041.webp" data-lb-caption="In-the-wild: HUG3D (Geo).">
+                    <img src="assets/img/image041.webp" alt="HUG3D geometry output in the wild" loading="lazy"><span>Geo</span>
+                  </article>
+                </div>
+              </article>
+            </div>
           </div>
         </div>
       </div>
@@ -286,17 +362,6 @@
           <figcaption>Novel-view RGB renderings from reconstructed meshes.</figcaption>
         </figure>
       </div>
-    </section>
-
-    <section id="bibtex" class="section surface reveal">
-      <h2>BibTeX</h2>
-      <pre><code id="bibtexBlock">@inproceedings{kim2026hug3d,
-  title     = {Human Interaction-Aware 3D Reconstruction from a Single Image},
-  author    = {Kim, Gwanghyun and Kim, Junghun James and Jeon, Suh Yoon and Park, Jason and Chun, Se Young},
-  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
-  year      = {2026}
-}</code></pre>
-      <button id="copyBibtex" class="chip" type="button">Copy BibTeX</button>
     </section>
   </main>
 

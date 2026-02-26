@@ -1,24 +1,4 @@
 (() => {
-  const root = document.documentElement;
-  const themeToggle = document.getElementById('themeToggle');
-
-  const savedTheme = localStorage.getItem('hug3d-theme');
-  if (savedTheme === 'dark') {
-    root.setAttribute('data-theme', 'dark');
-  }
-
-  if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-      const nextTheme = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      if (nextTheme === 'dark') {
-        root.setAttribute('data-theme', 'dark');
-      } else {
-        root.removeAttribute('data-theme');
-      }
-      localStorage.setItem('hug3d-theme', nextTheme);
-    });
-  }
-
   document.querySelectorAll('.chip--disabled').forEach((chip) => {
     chip.addEventListener('click', (event) => {
       event.preventDefault();
@@ -41,6 +21,10 @@
     const poster = trigger.getAttribute('data-lb-poster') || '';
     const caption = trigger.getAttribute('data-lb-caption') || '';
 
+    if (!src) {
+      return;
+    }
+
     lightboxCaption.textContent = caption;
 
     if (type === 'video') {
@@ -61,9 +45,10 @@
       lightboxVideo.pause();
       lightboxVideo.hidden = true;
       lightboxVideo.removeAttribute('src');
+      lightboxVideo.removeAttribute('poster');
 
       lightboxImage.hidden = false;
-      lightboxImage.setAttribute('src', src || '');
+      lightboxImage.setAttribute('src', src);
     }
 
     lightbox.classList.add('is-open');
@@ -84,6 +69,7 @@
 
     lightboxVideo.pause();
     lightboxVideo.removeAttribute('src');
+    lightboxVideo.removeAttribute('poster');
     lightboxVideo.hidden = true;
 
     document.body.style.overflow = '';
@@ -91,13 +77,28 @@
 
   document.querySelectorAll('.js-lightbox').forEach((node) => {
     node.setAttribute('tabindex', '0');
-    node.addEventListener('click', () => openLightbox(node));
-    node.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        openLightbox(node);
-      }
-    });
+    node.setAttribute('role', 'button');
+  });
+
+  document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('.js-lightbox');
+    if (!trigger) {
+      return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+    openLightbox(trigger);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    const trigger = event.target.closest('.js-lightbox');
+    if (!trigger) {
+      return;
+    }
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      openLightbox(trigger);
+    }
   });
 
   if (lightboxClose) {
@@ -117,26 +118,6 @@
       closeLightbox();
     }
   });
-
-  const copyBibtexButton = document.getElementById('copyBibtex');
-  const bibtexBlock = document.getElementById('bibtexBlock');
-
-  if (copyBibtexButton && bibtexBlock) {
-    copyBibtexButton.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(bibtexBlock.textContent || '');
-        copyBibtexButton.textContent = 'Copied';
-        setTimeout(() => {
-          copyBibtexButton.textContent = 'Copy BibTeX';
-        }, 1200);
-      } catch (_error) {
-        copyBibtexButton.textContent = 'Copy failed';
-        setTimeout(() => {
-          copyBibtexButton.textContent = 'Copy BibTeX';
-        }, 1200);
-      }
-    });
-  }
 
   const revealItems = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
