@@ -393,12 +393,17 @@ p {
   aspect-ratio: 4 / 5;
 }
 
-.comparison-board .media-card img {
+.media-card img,
+.media-card video {
   width: 100%;
   height: 100%;
   object-fit: contain;
   object-position: center;
   background: #f2f3f3;
+}
+
+.media-card__preview {
+  pointer-events: none;
 }
 
 .media-card::after {

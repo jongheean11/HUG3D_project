@@ -1,4 +1,73 @@
 (() => {
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const initInlineAutoplayVideos = () => {
+    const previews = [];
+
+    document.querySelectorAll('.media-card[data-lb-type="video"]').forEach((card) => {
+      const src = card.getAttribute('data-lb-src');
+      if (!src) {
+        return;
+      }
+
+      let preview = card.querySelector('video.media-card__preview');
+      if (!preview) {
+        preview = document.createElement('video');
+        preview.className = 'media-card__preview';
+        preview.setAttribute('aria-hidden', 'true');
+        preview.setAttribute('playsinline', '');
+        preview.setAttribute('muted', '');
+        preview.setAttribute('loop', '');
+        preview.preload = 'metadata';
+        preview.src = src;
+
+        const poster = card.getAttribute('data-lb-poster');
+        if (poster) {
+          preview.poster = poster;
+        }
+
+        const oldImage = card.querySelector('img');
+        if (oldImage) {
+          oldImage.replaceWith(preview);
+        } else {
+          card.prepend(preview);
+        }
+      }
+
+      preview.defaultMuted = true;
+      preview.muted = true;
+      preview.loop = true;
+      preview.playsInline = true;
+      preview.controls = false;
+      preview.autoplay = !prefersReducedMotion;
+      previews.push(preview);
+    });
+
+    if (prefersReducedMotion || previews.length === 0) {
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target;
+        if (!(video instanceof HTMLVideoElement)) {
+          return;
+        }
+        if (entry.isIntersecting) {
+          video.play().catch(() => {
+            // Autoplay may still be blocked in some environments.
+          });
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.2 });
+
+    previews.forEach((video) => observer.observe(video));
+  };
+
+  initInlineAutoplayVideos();
+
   document.querySelectorAll('.chip--disabled').forEach((chip) => {
     chip.addEventListener('click', (event) => {
       event.preventDefault();
