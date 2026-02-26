@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HUG3D | Human Interaction-Aware 3D Reconstruction from a Single Image</title>
+  <meta name="description" content="Project page for HUG3D, a framework for reconstructing high-fidelity interacting humans in 3D from a single image.">
+  <meta name="keywords" content="HUG3D, 3D reconstruction, multi-human, CVPR 2026, diffusion">
+
+  <meta property="og:title" content="HUG3D | Human Interaction-Aware 3D Reconstruction from a Single Image">
+  <meta property="og:description" content="Single-image, interaction-aware, textured multi-human 3D reconstruction.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/img/og-image.png">
+  <meta property="og:url" content="https://jongheean11.github.io/HUG3D_project/">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="HUG3D | Human Interaction-Aware 3D Reconstruction from a Single Image">
+  <meta name="twitter:description" content="Single-image, interaction-aware, textured multi-human 3D reconstruction.">
+  <meta name="twitter:image" content="assets/img/og-image.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" href="assets/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="256x256" href="assets/img/icon-256.png">
+</head>
+<body>
+  <div class="page-bg" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="site-header__logo" href="#top">HUG3D</a>
+    <nav class="site-header__nav" aria-label="Main">
+      <a href="#abstract">Abstract</a>
+      <a href="#method">Method</a>
+      <a href="#video-demos">Video</a>
+      <a href="#figures">Figures</a>
+      <a href="#bibtex">BibTeX</a>
+    </nav>
+    <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle color theme">Theme</button>
+  </header>
+
+  <main id="top">
+    <section class="hero reveal">
+      <div class="hero__inner surface">
+        <p class="hero__venue">CVPR 2026 Submission</p>
+        <h1>Human Interaction-Aware 3D Reconstruction from a Single Image</h1>
+        <p class="hero__subtitle">
+          HUG3D reconstructs physically plausible, high-fidelity textured 3D humans from a single image,
+          while handling perspective distortion, occlusion, and inter-human interactions.
+        </p>
+
+        <p class="hero__authors">
+          Gwanghyun Kim<sup>1*</sup>, Junghun James Kim<sup>2*</sup>, Suh Yoon Jeon<sup>1*</sup>,
+          Jason Park<sup>1</sup>, Se Young Chun<sup>1,2&#8224;</sup>
+        </p>
+        <p class="hero__affil">
+          <sup>1</sup>Dept. of Electrical and Computer Engineering, Seoul National University
+          <br>
+          <sup>2</sup>INMC &amp; IPAI, Seoul National University
+          <br>
+          <span class="muted"><sup>*</sup>Equal contribution. <sup>&#8224;</sup>Corresponding author.</span>
+        </p>
+
+        <div class="hero__links">
+          <a class="chip chip--disabled" href="#" aria-disabled="true">Paper (Coming Soon)</a>
+          <a class="chip chip--disabled" href="#" aria-disabled="true">arXiv (Coming Soon)</a>
+          <a class="chip chip--disabled" href="#" aria-disabled="true">Code (Coming Soon)</a>
+          <a class="chip" href="#video-demos">Video Demos</a>
+        </div>
+      </div>
+
+      <figure class="figure-card reveal js-lightbox"
+              data-lb-type="image"
+              data-lb-src="assets/img/fig-motivating.webp"
+              data-lb-caption="Core challenges in monocular multi-human reconstruction and how HUG3D addresses them.">
+        <img src="assets/img/fig-motivating.webp" alt="HUG3D motivating figure" loading="eager">
+        <figcaption>
+          Core challenges in monocular multi-human 3D reconstruction and HUG3D's holistic solution.
+        </figcaption>
+      </figure>
+    </section>
+
+    <section id="abstract" class="section surface reveal">
+      <h2>Abstract</h2>
+      <p>
+        Reconstructing textured 3D humans from a single image is essential for AR/VR and digital human applications,
+        but existing approaches mostly target single-person scenes and often fail under heavy occlusion and close interactions.
+        HUG3D introduces a holistic pipeline that combines canonical perspective-to-orthographic transformation (Pers2Ortho),
+        Human Group-Instance Multi-View Diffusion (HUG-MVD), and physics-aware Human Group-Instance Geometry Reconstruction (HUG-GR)
+        for accurate geometry and high-fidelity texture recovery.
+      </p>
+      <p>
+        By jointly modeling group-level context and instance-level details, HUG3D recovers plausible inter-human contact,
+        completes occluded regions, and significantly improves reconstruction quality over single-human and prior multi-human baselines.
+      </p>
+    </section>
+
+    <section id="method" class="section reveal">
+      <h2>Method Overview</h2>
+      <div class="surface stack">
+        <figure class="figure-card js-lightbox"
+                data-lb-type="image"
+                data-lb-src="assets/img/fig-method.webp"
+                data-lb-caption="HUG3D pipeline: Pers2Ortho, HUG-MVD, and textured mesh reconstruction with HUG-GR.">
+          <img src="assets/img/fig-method.webp" alt="HUG3D method overview" loading="lazy">
+          <figcaption>
+            HUG3D pipeline: Pers2Ortho canonicalization, HUG-MVD completion, and physics-aware textured mesh reconstruction.
+          </figcaption>
+        </figure>
+
+        <div class="highlights">
+          <article class="mini-card js-lightbox"
+                   data-lb-type="image"
+                   data-lb-src="assets/img/fig-p2o-filtering.webp"
+                   data-lb-caption="Depth edge-aware filtering for robust Pers2Ortho projection.">
+            <img src="assets/img/fig-p2o-filtering.webp" alt="Depth edge-aware filtering" loading="lazy">
+            <h3>Stable Canonicalization</h3>
+            <p>Depth-aware filtering stabilizes orthographic projection under severe occlusion and perspective distortion.</p>
+          </article>
+
+          <article class="mini-card js-lightbox"
+                   data-lb-type="image"
+                   data-lb-src="assets/img/fig-method-training.webp"
+                   data-lb-caption="HUG-MVD training for multi-view completion with occlusion simulation.">
+            <img src="assets/img/fig-method-training.webp" alt="HUG-MVD training overview" loading="lazy">
+            <h3>Interaction-Aware Diffusion</h3>
+            <p>HUG-MVD jointly models group and instance cues to complete missing geometry and textures consistently.</p>
+          </article>
+
+          <article class="mini-card js-lightbox"
+                   data-lb-type="image"
+                   data-lb-src="assets/img/fig-texture-blending.webp"
+                   data-lb-caption="Occlusion-aware texture blending.">
+            <img src="assets/img/fig-texture-blending.webp" alt="Occlusion-aware texture blending" loading="lazy">
+            <h3>Texture Fusion</h3>
+            <p>View-aware confidence and edge-aware blending reduce boundary artifacts in reconstructed textures.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="video-demos" class="section reveal">
+      <h2>Video Comparisons</h2>
+      <p class="section__lead">
+        Layout follows the comparison style in the provided presentation. Click any clip to play in a larger view.
+      </p>
+
+      <div class="demo-panel surface">
+        <h3>MultiHuman Benchmark Case</h3>
+        <div class="demo-layout">
+          <figure class="demo-input js-lightbox"
+                  data-lb-type="image"
+                  data-lb-src="assets/img/image001.png"
+                  data-lb-caption="Input image for MultiHuman comparison case.">
+            <img src="assets/img/image001.webp" alt="Input image for MultiHuman benchmark" loading="lazy">
+            <figcaption>Input image</figcaption>
+          </figure>
+          <div class="demo-grid">
+            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media001.mp4" data-lb-poster="assets/img/image002.webp" data-lb-caption="MultiHuman comparison clip 1.">
+              <img src="assets/img/image002.webp" alt="Comparison clip 1" loading="lazy"><span>Clip 01</span>
+            </article>
+            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media002.mp4" data-lb-poster="assets/img/image003.webp" data-lb-caption="MultiHuman comparison clip 2.">
+              <img src="assets/img/image003.webp" alt="Comparison clip 2" loading="lazy"><span>Clip 02</span>
+            </article>
+            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media003.mp4" data-lb-poster="assets/img/image004.webp" data-lb-caption="MultiHuman comparison clip 3.">
+              <img src="assets/img/image004.webp" alt="Comparison clip 3" loading="lazy"><span>Clip 03</span>
+            </article>
+            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media004.mp4" data-lb-poster="assets/img/image005.webp" data-lb-caption="MultiHuman comparison clip 4.">
+              <img src="assets/img/image005.webp" alt="Comparison clip 4" loading="lazy"><span>Clip 04</span>
+            </article>
+            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media005.mp4" data-lb-poster="assets/img/image006.webp" data-lb-caption="MultiHuman comparison clip 5.">
+              <img src="assets/img/image006.webp" alt="Comparison clip 5" loading="lazy"><span>Clip 05</span>
+            </article>
+            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media006.mp4" data-lb-poster="assets/img/image007.webp" data-lb-caption="MultiHuman comparison clip 6.">
+              <img src="assets/img/image007.webp" alt="Comparison clip 6" loading="lazy"><span>Clip 06</span>
+            </article>
+            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media007.mp4" data-lb-poster="assets/img/image008.webp" data-lb-caption="MultiHuman comparison clip 7.">
+              <img src="assets/img/image008.webp" alt="Comparison clip 7" loading="lazy"><span>Clip 07</span>
+            </article>
+            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media008.mp4" data-lb-poster="assets/img/image009.webp" data-lb-caption="MultiHuman comparison clip 8.">
+              <img src="assets/img/image009.webp" alt="Comparison clip 8" loading="lazy"><span>Clip 08</span>
+            </article>
+            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media009.mp4" data-lb-poster="assets/img/image010.webp" data-lb-caption="MultiHuman comparison clip 9.">
+              <img src="assets/img/image010.webp" alt="Comparison clip 9" loading="lazy"><span>Clip 09</span>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-panel surface">
+        <h3>In-the-Wild Comparison Case</h3>
+        <div class="demo-layout">
+          <figure class="demo-input js-lightbox"
+                  data-lb-type="image"
+                  data-lb-src="assets/img/image041.png"
+                  data-lb-caption="Input image for in-the-wild comparison case.">
+            <img src="assets/img/image041.webp" alt="Input image for in-the-wild case" loading="lazy">
+            <figcaption>Input image</figcaption>
+          </figure>
+          <div class="demo-grid">
+            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media037.mp4" data-lb-poster="assets/img/image042.webp" data-lb-caption="In-the-wild comparison clip 1.">
+              <img src="assets/img/image042.webp" alt="In-the-wild clip 1" loading="lazy"><span>Clip 01</span>
+            </article>
+            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media038.mp4" data-lb-poster="assets/img/image043.webp" data-lb-caption="In-the-wild comparison clip 2.">
+              <img src="assets/img/image043.webp" alt="In-the-wild clip 2" loading="lazy"><span>Clip 02</span>
+            </article>
+            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media039.mp4" data-lb-poster="assets/img/image044.webp" data-lb-caption="In-the-wild comparison clip 3.">
+              <img src="assets/img/image044.webp" alt="In-the-wild clip 3" loading="lazy"><span>Clip 03</span>
+            </article>
+            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media040.mp4" data-lb-poster="assets/img/image045.webp" data-lb-caption="In-the-wild comparison clip 4.">
+              <img src="assets/img/image045.webp" alt="In-the-wild clip 4" loading="lazy"><span>Clip 04</span>
+            </article>
+            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media041.mp4" data-lb-poster="assets/img/image046.webp" data-lb-caption="In-the-wild comparison clip 5.">
+              <img src="assets/img/image046.webp" alt="In-the-wild clip 5" loading="lazy"><span>Clip 05</span>
+            </article>
+            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media042.mp4" data-lb-poster="assets/img/image047.webp" data-lb-caption="In-the-wild comparison clip 6.">
+              <img src="assets/img/image047.webp" alt="In-the-wild clip 6" loading="lazy"><span>Clip 06</span>
+            </article>
+            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media043.mp4" data-lb-poster="assets/img/image048.webp" data-lb-caption="In-the-wild comparison clip 7.">
+              <img src="assets/img/image048.webp" alt="In-the-wild clip 7" loading="lazy"><span>Clip 07</span>
+            </article>
+            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media044.mp4" data-lb-poster="assets/img/image049.webp" data-lb-caption="In-the-wild comparison clip 8.">
+              <img src="assets/img/image049.webp" alt="In-the-wild clip 8" loading="lazy"><span>Clip 08</span>
+            </article>
+            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media045.mp4" data-lb-poster="assets/img/image050.webp" data-lb-caption="In-the-wild comparison clip 9.">
+              <img src="assets/img/image050.webp" alt="In-the-wild clip 9" loading="lazy"><span>Clip 09</span>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-panel surface">
+        <h3>Additional In-the-Wild: MultiPly vs HUG3D</h3>
+        <div class="two-row-demo">
+          <div class="two-row-demo__item">
+            <figure class="demo-input js-lightbox" data-lb-type="image" data-lb-src="assets/img/image106.png" data-lb-caption="Additional in-the-wild input case A.">
+              <img src="assets/img/image106.webp" alt="Additional input case A" loading="lazy">
+              <figcaption>Input A</figcaption>
+            </figure>
+            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media097.mp4" data-lb-poster="assets/img/image107.webp" data-lb-caption="Case A: MultiPly.">
+              <img src="assets/img/image107.webp" alt="Case A MultiPly" loading="lazy"><span>MultiPly</span>
+            </article>
+            <article class="media-card media-card--ours js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media098.mp4" data-lb-poster="assets/img/image108.webp" data-lb-caption="Case A: HUG3D (Ours).">
+              <img src="assets/img/image108.webp" alt="Case A HUG3D" loading="lazy"><span>HUG3D (Ours)</span>
+            </article>
+          </div>
+
+          <div class="two-row-demo__item">
+            <figure class="demo-input js-lightbox" data-lb-type="image" data-lb-src="assets/img/image109.png" data-lb-caption="Additional in-the-wild input case B.">
+              <img src="assets/img/image109.webp" alt="Additional input case B" loading="lazy">
+              <figcaption>Input B</figcaption>
+            </figure>
+            <article class="media-card js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media099.mp4" data-lb-poster="assets/img/image110.webp" data-lb-caption="Case B: MultiPly.">
+              <img src="assets/img/image110.webp" alt="Case B MultiPly" loading="lazy"><span>MultiPly</span>
+            </article>
+            <article class="media-card media-card--ours js-lightbox" data-lb-type="video" data-lb-src="assets/vid/media100.mp4" data-lb-poster="assets/img/image111.webp" data-lb-caption="Case B: HUG3D (Ours).">
+              <img src="assets/img/image111.webp" alt="Case B HUG3D" loading="lazy"><span>HUG3D (Ours)</span>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="figures" class="section reveal">
+      <h2>Additional Figures</h2>
+      <div class="figure-grid">
+        <figure class="figure-card js-lightbox" data-lb-type="image" data-lb-src="assets/img/fig-ablation-pers2ortho.webp" data-lb-caption="Ablation: perspective vs orthographic training.">
+          <img src="assets/img/fig-ablation-pers2ortho.webp" alt="Ablation of perspective to orthographic transform" loading="lazy">
+          <figcaption>Ablation: training with perspective vs orthographic views.</figcaption>
+        </figure>
+
+        <figure class="figure-card js-lightbox" data-lb-type="image" data-lb-src="assets/img/fig-robustness.webp" data-lb-caption="Robustness to estimation noise.">
+          <img src="assets/img/fig-robustness.webp" alt="Robustness to estimation noise" loading="lazy">
+          <figcaption>Robustness to upstream estimation noise.</figcaption>
+        </figure>
+
+        <figure class="figure-card js-lightbox" data-lb-type="image" data-lb-src="assets/img/fig-generalization.webp" data-lb-caption="Generalization to out-of-distribution human types.">
+          <img src="assets/img/fig-generalization.webp" alt="Generalization to out-of-distribution humans" loading="lazy">
+          <figcaption>Generalization to novel human domains.</figcaption>
+        </figure>
+
+        <figure class="figure-card js-lightbox" data-lb-type="image" data-lb-src="assets/img/fig-novel-rgb.webp" data-lb-caption="Novel-view RGB rendering from reconstructed textured mesh.">
+          <img src="assets/img/fig-novel-rgb.webp" alt="Novel view RGB renderings" loading="lazy">
+          <figcaption>Novel-view RGB renderings from reconstructed meshes.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="bibtex" class="section surface reveal">
+      <h2>BibTeX</h2>
+      <pre><code id="bibtexBlock">@inproceedings{kim2026hug3d,
+  title     = {Human Interaction-Aware 3D Reconstruction from a Single Image},
+  author    = {Kim, Gwanghyun and Kim, Junghun James and Jeon, Suh Yoon and Park, Jason and Chun, Se Young},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  year      = {2026}
+}</code></pre>
+      <button id="copyBibtex" class="chip" type="button">Copy BibTeX</button>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>HUG3D Project Page. Media and text are derived from the provided main/supplementary/rebuttal materials.</p>
+  </footer>
+
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Media viewer">
+    <button id="lightboxClose" class="lightbox__close" type="button" aria-label="Close media viewer">Close</button>
+    <div class="lightbox__content">
+      <img id="lightboxImage" alt="Expanded media" hidden>
+      <video id="lightboxVideo" controls playsinline hidden></video>
+      <p id="lightboxCaption" class="lightbox__caption"></p>
+    </div>
+  </div>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
