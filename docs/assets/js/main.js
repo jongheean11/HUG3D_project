@@ -1,10 +1,36 @@
 (() => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const saveDataEnabled = Boolean(
+    navigator.connection
+    && typeof navigator.connection.saveData === 'boolean'
+    && navigator.connection.saveData
+  );
 
   const initInlineAutoplayVideos = () => {
-    const previews = [];
+    const cards = Array.from(document.querySelectorAll('.media-card[data-lb-type="video"]'));
+    if (cards.length === 0) {
+      return;
+    }
 
-    document.querySelectorAll('.media-card[data-lb-type="video"]').forEach((card) => {
+    const shouldAutoplay = !prefersReducedMotion && !saveDataEnabled;
+    const hydratePreview = (card, preview) => {
+      if (!(preview instanceof HTMLVideoElement)) {
+        return;
+      }
+      if (preview.dataset.loaded === 'true') {
+        return;
+      }
+      const src = preview.dataset.src;
+      if (!src) {
+        return;
+      }
+      preview.src = src;
+      preview.dataset.loaded = 'true';
+      preview.load();
+      card.classList.remove('is-video-ready');
+    };
+
+    cards.forEach((card) => {
       const src = card.getAttribute('data-lb-src');
       if (!src) {
         return;
@@ -16,22 +42,22 @@
         preview.className = 'media-card__preview';
         preview.setAttribute('aria-hidden', 'true');
         preview.setAttribute('playsinline', '');
+        preview.setAttribute('webkit-playsinline', '');
         preview.setAttribute('muted', '');
         preview.setAttribute('loop', '');
-        preview.preload = 'metadata';
-        preview.src = src;
+        preview.preload = 'none';
 
         const poster = card.getAttribute('data-lb-poster');
         if (poster) {
           preview.poster = poster;
         }
 
-        const oldImage = card.querySelector('img');
-        if (oldImage) {
-          oldImage.replaceWith(preview);
-        } else {
-          card.prepend(preview);
-        }
+        card.append(preview);
+      }
+
+      preview.dataset.src = src;
+      if (preview.getAttribute('src')) {
+        preview.dataset.loaded = 'true';
       }
 
       preview.defaultMuted = true;
@@ -39,31 +65,72 @@
       preview.loop = true;
       preview.playsInline = true;
       preview.controls = false;
-      preview.autoplay = !prefersReducedMotion;
-      previews.push(preview);
+      preview.autoplay = false;
+      preview.disablePictureInPicture = true;
+
+      if (preview.dataset.bound !== 'true') {
+        preview.addEventListener('loadeddata', () => {
+          card.classList.add('is-video-ready');
+        });
+
+        preview.addEventListener('error', () => {
+          card.classList.remove('is-video-ready');
+          preview.pause();
+          preview.removeAttribute('src');
+          preview.dataset.loaded = 'false';
+          preview.load();
+        });
+
+        preview.dataset.bound = 'true';
+      }
+
+      card.classList.remove('is-video-ready');
     });
 
-    if (prefersReducedMotion || previews.length === 0) {
+    if (!shouldAutoplay) {
+      return;
+    }
+
+    const playVisibleCard = (card) => {
+      const preview = card.querySelector('video.media-card__preview');
+      if (!(preview instanceof HTMLVideoElement)) {
+        return;
+      }
+      hydratePreview(card, preview);
+      preview.play().catch(() => {
+        // Autoplay can be blocked in some environments.
+      });
+    };
+
+    if (!('IntersectionObserver' in window)) {
+      cards.forEach((card) => playVisibleCard(card));
       return;
     }
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        const video = entry.target;
-        if (!(video instanceof HTMLVideoElement)) {
+        const card = entry.target;
+        if (!(card instanceof HTMLElement)) {
           return;
         }
+
+        const preview = card.querySelector('video.media-card__preview');
+        if (!(preview instanceof HTMLVideoElement)) {
+          return;
+        }
+
         if (entry.isIntersecting) {
-          video.play().catch(() => {
-            // Autoplay may still be blocked in some environments.
-          });
+          playVisibleCard(card);
         } else {
-          video.pause();
+          preview.pause();
         }
       });
-    }, { threshold: 0.2 });
+    }, {
+      threshold: 0.1,
+      rootMargin: '220px 0px',
+    });
 
-    previews.forEach((video) => observer.observe(video));
+    cards.forEach((card) => observer.observe(card));
   };
 
   initInlineAutoplayVideos();
