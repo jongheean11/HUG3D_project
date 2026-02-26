@@ -1,10 +1,5 @@
 (() => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const saveDataEnabled = Boolean(
-    navigator.connection
-    && typeof navigator.connection.saveData === 'boolean'
-    && navigator.connection.saveData
-  );
 
   const initInlineAutoplayVideos = () => {
     const cards = Array.from(document.querySelectorAll('.media-card[data-lb-type="video"]'));
@@ -12,7 +7,7 @@
       return;
     }
 
-    const shouldAutoplay = !prefersReducedMotion && !saveDataEnabled;
+    const shouldAutoplay = !prefersReducedMotion;
     const hydratePreview = (card, preview) => {
       if (!(preview instanceof HTMLVideoElement)) {
         return;
@@ -45,7 +40,7 @@
         preview.setAttribute('webkit-playsinline', '');
         preview.setAttribute('muted', '');
         preview.setAttribute('loop', '');
-        preview.preload = 'none';
+        preview.preload = 'metadata';
 
         const poster = card.getAttribute('data-lb-poster');
         if (poster) {
@@ -87,19 +82,19 @@
       card.classList.remove('is-video-ready');
     });
 
-    if (!shouldAutoplay) {
-      return;
-    }
-
     const playVisibleCard = (card) => {
       const preview = card.querySelector('video.media-card__preview');
       if (!(preview instanceof HTMLVideoElement)) {
         return;
       }
       hydratePreview(card, preview);
-      preview.play().catch(() => {
-        // Autoplay can be blocked in some environments.
-      });
+      if (shouldAutoplay) {
+        preview.play().catch(() => {
+          // Autoplay can be blocked in some environments.
+        });
+      } else {
+        preview.pause();
+      }
     };
 
     if (!('IntersectionObserver' in window)) {
@@ -270,14 +265,19 @@
   });
 
   const revealItems = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
+  if (!('IntersectionObserver' in window)) {
+    revealItems.forEach((item) => item.classList.add('is-visible'));
+    return;
+  }
+
+  const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
+        revealObserver.unobserve(entry.target);
       }
     });
   }, { threshold: 0.14 });
 
-  revealItems.forEach((item) => observer.observe(item));
+  revealItems.forEach((item) => revealObserver.observe(item));
 })();
