@@ -33,8 +33,8 @@
     <a class="site-header__logo" href="#top">HUG3D</a>
     <nav class="site-header__nav" aria-label="Main">
       <a href="#abstract">Abstract</a>
-      <a href="#method">Method</a>
       <a href="#video-demos">Video</a>
+      <a href="#method">Method</a>
       <a href="#figures">Figures</a>
     </nav>
   </header>
@@ -42,7 +42,7 @@
   <main id="top">
     <section class="hero reveal">
       <div class="hero__inner surface">
-        <p class="hero__venue">CVPR 2026 Submission</p>
+        <p class="hero__venue">CVPR 2026</p>
         <h1>Human Interaction-Aware 3D Reconstruction from a Single Image</h1>
         <p class="hero__subtitle">
           HUG3D reconstructs physically plausible, high-fidelity textured 3D humans from a single image,
@@ -97,55 +97,12 @@
       </div>
     </section>
 
-    <section id="method" class="section reveal">
-      <h2>Method Overview</h2>
-      <div class="surface stack">
-        <figure class="figure-card js-lightbox"
-                data-lb-type="image"
-                data-lb-src="assets/img/fig-method.webp"
-                data-lb-caption="HUG3D pipeline: Pers2Ortho, HUG-MVD, and textured mesh reconstruction with HUG-GR.">
-          <img src="assets/img/fig-method.webp" alt="HUG3D method overview" loading="lazy">
-          <figcaption>
-            HUG3D pipeline: Pers2Ortho canonicalization, HUG-MVD completion, and physics-aware textured mesh reconstruction.
-          </figcaption>
-        </figure>
-
-        <div class="highlights">
-          <article class="mini-card js-lightbox"
-                   data-lb-type="image"
-                   data-lb-src="assets/img/fig-p2o-filtering.webp"
-                   data-lb-caption="Depth edge-aware filtering for robust Pers2Ortho projection.">
-            <img src="assets/img/fig-p2o-filtering.webp" alt="Depth edge-aware filtering" loading="lazy">
-            <h3>Stable Canonicalization</h3>
-            <p>Depth-aware filtering stabilizes orthographic projection under severe occlusion and perspective distortion.</p>
-          </article>
-
-          <article class="mini-card js-lightbox"
-                   data-lb-type="image"
-                   data-lb-src="assets/img/fig-method-training.webp"
-                   data-lb-caption="HUG-MVD training for multi-view completion with occlusion simulation.">
-            <img src="assets/img/fig-method-training.webp" alt="HUG-MVD training overview" loading="lazy">
-            <h3>Interaction-Aware Diffusion</h3>
-            <p>HUG-MVD jointly models group and instance cues to complete missing geometry and textures consistently.</p>
-          </article>
-
-          <article class="mini-card js-lightbox"
-                   data-lb-type="image"
-                   data-lb-src="assets/img/fig-texture-blending.webp"
-                   data-lb-caption="Occlusion-aware texture blending.">
-            <img src="assets/img/fig-texture-blending.webp" alt="Occlusion-aware texture blending" loading="lazy">
-            <h3>Texture Fusion</h3>
-            <p>View-aware confidence and edge-aware blending reduce boundary artifacts in reconstructed textures.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
     <section id="video-demos" class="section reveal">
       <h2>Video Comparisons</h2>
       <p class="section__lead">
-        Results are arranged by method from the provided PPT layout. Each method shows Tex and Geo outputs when available.
+        Results are arranged by method from the provided PPT layout. Each method shows Geo and Tex outputs when available.
       </p>
+      <div class="comparison-carousel">
 
       <div class="comparison-board surface">
         <h3>MultiHuman Dataset - Example 1</h3>
@@ -723,19 +680,28 @@
           </div>
         </div>
       </div>
+      </div>
+    </section>
+
+    <section id="method" class="section reveal">
+      <h2>Method Overview</h2>
+      <div class="surface stack">
+        <figure class="figure-card js-lightbox"
+                data-lb-type="image"
+                data-lb-src="assets/img/fig-method.webp"
+                data-lb-caption="HUG3D pipeline: Pers2Ortho, HUG-MVD, and textured mesh reconstruction with HUG-GR.">
+          <img src="assets/img/fig-method.webp" alt="HUG3D method overview" loading="lazy">
+          <figcaption>
+            HUG3D pipeline: Pers2Ortho canonicalization, HUG-MVD completion, and physics-aware textured mesh reconstruction.
+          </figcaption>
+        </figure>
+      </div>
     </section>
 
     <section id="figures" class="section reveal">
       <h2>Additional Figures</h2>
-      <p class="section__lead">Selected qualitative and ablation figures from main/supplementary materials.</p>
+      <p class="section__lead">Selected qualitative figures from main/supplementary materials.</p>
       <div class="figure-grid figure-grid--clean">
-        <figure class="figure-card figure-card--clean js-lightbox" data-lb-type="image" data-lb-src="assets/img/fig-ablation-pers2ortho.webp" data-lb-caption="Ablation: perspective vs orthographic training.">
-          <div class="figure-card__media">
-            <img src="assets/img/fig-ablation-pers2ortho.webp" alt="Ablation of perspective to orthographic transform" loading="lazy">
-          </div>
-          <figcaption>Ablation: training with perspective vs orthographic views.</figcaption>
-        </figure>
-
         <figure class="figure-card figure-card--clean js-lightbox" data-lb-type="image" data-lb-src="assets/img/fig-robustness.webp" data-lb-caption="Robustness to estimation noise.">
           <div class="figure-card__media">
             <img src="assets/img/fig-robustness.webp" alt="Robustness to estimation noise" loading="lazy">

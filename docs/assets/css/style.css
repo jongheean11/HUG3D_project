@@ -292,6 +292,32 @@ p {
   padding: 14px;
 }
 
+.comparison-carousel {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+.comparison-carousel > .comparison-board,
+.comparison-carousel > .demo-panel {
+  flex: 0 0 min(1080px, 94vw);
+  margin-top: 0;
+  scroll-snap-align: start;
+}
+
+.comparison-carousel::-webkit-scrollbar {
+  height: 10px;
+}
+
+.comparison-carousel::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--muted) 28%, transparent);
+  border-radius: 999px;
+}
+
 .comparison-layout {
   display: grid;
   gap: 12px;
@@ -667,6 +693,11 @@ code {
 
   .comparison-layout {
     grid-template-columns: 1fr;
+  }
+
+  .comparison-carousel > .comparison-board,
+  .comparison-carousel > .demo-panel {
+    flex-basis: 100%;
   }
 
   .comparison-row {
