@@ -292,11 +292,70 @@ p {
   padding: 14px;
 }
 
+.comparison-toolbar {
+  margin: 2px 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.comparison-nav-btn {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-2) 90%, transparent);
+  color: var(--text);
+  padding: 7px 12px;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.comparison-nav-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.comparison-jumps {
+  flex: 1;
+  display: flex;
+  gap: 7px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.comparison-jump {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-2) 88%, transparent);
+  color: var(--muted);
+  padding: 6px 10px;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.comparison-jump.is-active {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface-2));
+  color: var(--accent);
+}
+
+.comparison-hint {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
 .comparison-carousel {
   display: flex;
   gap: 14px;
   overflow-x: auto;
   padding-bottom: 8px;
+  scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
@@ -695,6 +754,11 @@ code {
     grid-template-columns: 1fr;
   }
 
+  .comparison-toolbar {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+  }
+
   .comparison-carousel > .comparison-board,
   .comparison-carousel > .demo-panel {
     flex-basis: 100%;
@@ -736,6 +800,15 @@ code {
   .hero__links {
     display: grid;
     grid-template-columns: 1fr;
+  }
+
+  .comparison-toolbar {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .comparison-jumps {
+    grid-column: 1 / -1;
+    order: 3;
   }
 
   .comparison-row,

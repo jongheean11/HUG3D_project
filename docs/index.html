@@ -35,7 +35,6 @@
       <a href="#abstract">Abstract</a>
       <a href="#video-demos">Video</a>
       <a href="#method">Method</a>
-      <a href="#figures">Figures</a>
     </nav>
   </header>
 
@@ -102,6 +101,12 @@
       <p class="section__lead">
         Results are arranged by method from the provided PPT layout. Each method shows Geo and Tex outputs when available.
       </p>
+      <div class="comparison-toolbar" aria-label="Comparison navigation controls">
+        <button id="comparisonPrev" class="comparison-nav-btn" type="button" aria-label="Previous comparison">&#8592; Prev</button>
+        <div id="comparisonJumps" class="comparison-jumps" aria-label="Comparison quick navigation"></div>
+        <button id="comparisonNext" class="comparison-nav-btn" type="button" aria-label="Next comparison">Next &#8594;</button>
+      </div>
+      <p class="comparison-hint">Swipe left/right, or use buttons and quick tabs.</p>
       <div class="comparison-carousel">
 
       <div class="comparison-board surface">
@@ -698,32 +703,6 @@
       </div>
     </section>
 
-    <section id="figures" class="section reveal">
-      <h2>Additional Figures</h2>
-      <p class="section__lead">Selected qualitative figures from main/supplementary materials.</p>
-      <div class="figure-grid figure-grid--clean">
-        <figure class="figure-card figure-card--clean js-lightbox" data-lb-type="image" data-lb-src="assets/img/fig-robustness.webp" data-lb-caption="Robustness to estimation noise.">
-          <div class="figure-card__media">
-            <img src="assets/img/fig-robustness.webp" alt="Robustness to estimation noise" loading="lazy">
-          </div>
-          <figcaption>Robustness to upstream estimation noise.</figcaption>
-        </figure>
-
-        <figure class="figure-card figure-card--clean js-lightbox" data-lb-type="image" data-lb-src="assets/img/fig-generalization.webp" data-lb-caption="Generalization to out-of-distribution human types.">
-          <div class="figure-card__media">
-            <img src="assets/img/fig-generalization.webp" alt="Generalization to out-of-distribution humans" loading="lazy">
-          </div>
-          <figcaption>Generalization to novel human domains.</figcaption>
-        </figure>
-
-        <figure class="figure-card figure-card--clean figure-card--clean-tall js-lightbox" data-lb-type="image" data-lb-src="assets/img/fig-novel-rgb.webp" data-lb-caption="Novel-view RGB rendering from reconstructed textured mesh.">
-          <div class="figure-card__media">
-            <img src="assets/img/fig-novel-rgb.webp" alt="Novel view RGB renderings" loading="lazy">
-          </div>
-          <figcaption>Novel-view RGB renderings from reconstructed meshes.</figcaption>
-        </figure>
-      </div>
-    </section>
   </main>
 
   <footer class="site-footer">

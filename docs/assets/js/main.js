@@ -130,6 +130,117 @@
 
   initInlineAutoplayVideos();
 
+  const initComparisonCarousel = () => {
+    const carousel = document.querySelector('.comparison-carousel');
+    const prevButton = document.getElementById('comparisonPrev');
+    const nextButton = document.getElementById('comparisonNext');
+    const jumpContainer = document.getElementById('comparisonJumps');
+
+    if (
+      !(carousel instanceof HTMLElement)
+      || !(prevButton instanceof HTMLButtonElement)
+      || !(nextButton instanceof HTMLButtonElement)
+      || !(jumpContainer instanceof HTMLElement)
+    ) {
+      return;
+    }
+
+    const cards = Array.from(carousel.children).filter(
+      (node) => node instanceof HTMLElement
+        && (node.classList.contains('comparison-board') || node.classList.contains('demo-panel'))
+    );
+
+    if (cards.length === 0) {
+      return;
+    }
+
+    let activeIndex = 0;
+    const jumpButtons = cards.map((card, index) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'comparison-jump';
+      const title = card.querySelector('h3');
+      button.textContent = title ? title.textContent.trim().replace(/\s+/g, ' ') : `Panel ${index + 1}`;
+      jumpContainer.append(button);
+      return button;
+    });
+
+    const updateControls = () => {
+      jumpButtons.forEach((button, index) => {
+        button.classList.toggle('is-active', index === activeIndex);
+      });
+      prevButton.disabled = activeIndex <= 0;
+      nextButton.disabled = activeIndex >= cards.length - 1;
+    };
+
+    const scrollToIndex = (nextIndex) => {
+      const clamped = Math.max(0, Math.min(cards.length - 1, nextIndex));
+      activeIndex = clamped;
+      const target = cards[clamped];
+      if (target) {
+        carousel.scrollTo({
+          left: target.offsetLeft - carousel.offsetLeft,
+          behavior: 'smooth',
+        });
+      }
+      updateControls();
+    };
+
+    jumpButtons.forEach((button, index) => {
+      button.addEventListener('click', () => {
+        scrollToIndex(index);
+      });
+    });
+
+    prevButton.addEventListener('click', () => {
+      scrollToIndex(activeIndex - 1);
+    });
+
+    nextButton.addEventListener('click', () => {
+      scrollToIndex(activeIndex + 1);
+    });
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+          const index = cards.indexOf(entry.target);
+          if (index >= 0 && index !== activeIndex) {
+            activeIndex = index;
+            updateControls();
+          }
+        });
+      }, {
+        root: carousel,
+        threshold: 0.55,
+      });
+
+      cards.forEach((card) => observer.observe(card));
+    } else {
+      carousel.addEventListener('scroll', () => {
+        let nearestIndex = 0;
+        let nearestDistance = Number.POSITIVE_INFINITY;
+        cards.forEach((card, index) => {
+          const distance = Math.abs((card.offsetLeft - carousel.offsetLeft) - carousel.scrollLeft);
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nearestIndex = index;
+          }
+        });
+        if (nearestIndex !== activeIndex) {
+          activeIndex = nearestIndex;
+          updateControls();
+        }
+      });
+    }
+
+    updateControls();
+  };
+
+  initComparisonCarousel();
+
   document.querySelectorAll('.chip--disabled').forEach((chip) => {
     chip.addEventListener('click', (event) => {
       event.preventDefault();
