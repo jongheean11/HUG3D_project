@@ -527,6 +527,11 @@ p {
   background: #f2f3f3;
 }
 
+.media-card--geo img,
+.media-card--geo video {
+  filter: grayscale(1);
+}
+
 .media-card img {
   z-index: 0;
   transition: opacity 180ms ease;

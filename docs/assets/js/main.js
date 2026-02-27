@@ -31,6 +31,13 @@
         return;
       }
 
+      const cardText = `${card.getAttribute('data-lb-caption') || ''} ${card.textContent || ''}`;
+      if (/\bgeo\b/i.test(cardText)) {
+        card.classList.add('media-card--geo');
+      } else {
+        card.classList.remove('media-card--geo');
+      }
+
       let preview = card.querySelector('video.media-card__preview');
       if (!preview) {
         preview = document.createElement('video');
