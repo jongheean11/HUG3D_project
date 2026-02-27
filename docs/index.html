@@ -49,8 +49,11 @@
         </p>
 
         <p class="hero__authors">
-          Gwanghyun Kim<sup>1*</sup>, Junghun James Kim<sup>2*</sup>, Suh Yoon Jeon<sup>1*</sup>,
-          Jason Park<sup>1</sup>, Se Young Chun<sup>1,2&#8224;</sup>
+          <a href="https://gwang-kim.github.io/" target="_blank" rel="noopener noreferrer">Gwanghyun Kim<sup>1*</sup></a>,
+          <a href="https://www.linkedin.com/in/james-hun-kim-a4682b106/" target="_blank" rel="noopener noreferrer">Junghun James Kim<sup>2*</sup></a>,
+          <a href="https://www.linkedin.com/in/suhyoonjeon/" target="_blank" rel="noopener noreferrer">Suh Yoon Jeon<sup>1*</sup></a>,
+          <a href="https://icl.snu.ac.kr/members#h.1hqddmjepuql" target="_blank" rel="noopener noreferrer">Jason Park<sup>1</sup></a>,
+          <a href="https://icl.snu.ac.kr/" target="_blank" rel="noopener noreferrer">Se Young Chun<sup>1,2&#8224;</sup></a>
         </p>
         <p class="hero__affil">
           <sup>1</sup>Dept. of Electrical and Computer Engineering, Seoul National University
@@ -83,24 +86,27 @@
       <h2>Abstract</h2>
       <div class="surface section__body">
         <p>
-          Reconstructing textured 3D humans from a single image is essential for AR/VR and digital human applications,
-          but existing approaches mostly target single-person scenes and often fail under heavy occlusion and close interactions.
-          HUG3D introduces a holistic pipeline that combines canonical perspective-to-orthographic transformation (Pers2Ortho),
-          Human Group-Instance Multi-View Diffusion (HUG-MVD), and physics-aware Human Group-Instance Geometry Reconstruction (HUG-GR)
-          for accurate geometry and high-fidelity texture recovery.
+          Reconstructing textured 3D human models from a single image is fundamental for AR/VR and digital human applications.
+          However, existing methods mostly focus on single individuals and thus fail in multi-human scenes, where naive composition
+          of individual reconstructions often leads to artifacts such as unrealistic overlaps, missing geometry in occluded regions,
+          and distorted interactions. These limitations highlight the need for approaches that incorporate group-level context and
+          interaction priors. We introduce a holistic method that explicitly models both group- and instance-level information. To
+          mitigate perspective-induced geometric distortions, we first transform the input into a canonical orthographic space. Our
+          primary component, Human Group-Instance Multi-View Diffusion (HUG-MVD), then generates complete multi-view normals and
+          images by jointly modeling individuals and group context to resolve occlusions and proximity. Subsequently, the Human
+          Group-Instance Geometric Reconstruction (HUG-GR) module optimizes the geometry by leveraging explicit, physics-based
+          interaction priors to enforce physical plausibility and accurately model inter-human contact. Finally, the multi-view images
+          are fused into a high-fidelity texture. Together, these components form our complete framework, HUG3D.
         </p>
         <p>
-          By jointly modeling group-level context and instance-level details, HUG3D recovers plausible inter-human contact,
-          completes occluded regions, and significantly improves reconstruction quality over single-human and prior multi-human baselines.
+          Extensive experiments show that HUG3D significantly outperforms both single-human and existing multi-human methods, producing
+          physically plausible, high-fidelity 3D reconstructions of interacting people from a single image.
         </p>
       </div>
     </section>
 
     <section id="video-demos" class="section reveal">
       <h2>Video Comparisons</h2>
-      <p class="section__lead">
-        Results are arranged by method from the provided PPT layout. Each method shows Geo and Tex outputs when available.
-      </p>
       <div class="comparison-toolbar" aria-label="Comparison navigation controls">
         <div id="comparisonJumps" class="comparison-jumps" aria-label="Comparison quick navigation"></div>
       </div>
@@ -699,10 +705,14 @@
         <figure class="figure-card js-lightbox"
                 data-lb-type="image"
                 data-lb-src="assets/img/fig-method.webp"
-                data-lb-caption="HUG3D pipeline: Pers2Ortho, HUG-MVD, and textured mesh reconstruction with HUG-GR.">
+                data-lb-caption="Overview of our HUG3D framework. Given a single perspective image, (1) the Canonical Perspective-to-Orthographic View Transform (Pers2Ortho) converts it into a consistent multi-view orthographic representation. (2) The Human Group-Instance Multi-View Diffusion (HUG-MVD) model completes occluded geometry and texture while maintaining plausible interactions. (3) The Textured Mesh Reconstruction stage refines the mesh with our physics-based Human Group-Instance Geometry Reconstruction (HUG-GR) module and generates high-fidelity textures.">
           <img src="assets/img/fig-method.webp" alt="HUG3D method overview" loading="lazy">
           <figcaption>
-            HUG3D pipeline: Pers2Ortho canonicalization, HUG-MVD completion, and physics-aware textured mesh reconstruction.
+            Overview of our HUG3D framework. Given a single perspective image, (1) the Canonical Perspective-to-Orthographic
+            View Transform (Pers2Ortho) converts it into a consistent multi-view orthographic representation. (2) The Human
+            Group-Instance Multi-View Diffusion (HUG-MVD) model completes occluded geometry and texture while maintaining
+            plausible interactions. (3) The Textured Mesh Reconstruction stage refines the mesh with our physics-based Human
+            Group-Instance Geometry Reconstruction (HUG-GR) module and generates high-fidelity textures.
           </figcaption>
         </figure>
       </div>
