@@ -165,12 +165,20 @@
       return button;
     });
 
-    const updateControls = () => {
+    const updateControls = (scrollBehavior = 'auto') => {
       jumpButtons.forEach((button, index) => {
         button.classList.toggle('is-active', index === activeIndex);
       });
       prevButton.disabled = activeIndex <= 0;
       nextButton.disabled = activeIndex >= cards.length - 1;
+      const activeButton = jumpButtons[activeIndex];
+      if (activeButton) {
+        activeButton.scrollIntoView({
+          inline: 'center',
+          block: 'nearest',
+          behavior: scrollBehavior,
+        });
+      }
     };
 
     const scrollToIndex = (nextIndex) => {
@@ -183,7 +191,7 @@
           behavior: 'smooth',
         });
       }
-      updateControls();
+      updateControls('smooth');
     };
 
     jumpButtons.forEach((button, index) => {
@@ -209,7 +217,7 @@
           const index = cards.indexOf(entry.target);
           if (index >= 0 && index !== activeIndex) {
             activeIndex = index;
-            updateControls();
+            updateControls('smooth');
           }
         });
       }, {
@@ -231,12 +239,12 @@
         });
         if (nearestIndex !== activeIndex) {
           activeIndex = nearestIndex;
-          updateControls();
+          updateControls('smooth');
         }
       });
     }
 
-    updateControls();
+    updateControls('auto');
   };
 
   initComparisonCarousel();

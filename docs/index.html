@@ -102,11 +102,12 @@
         Results are arranged by method from the provided PPT layout. Each method shows Geo and Tex outputs when available.
       </p>
       <div class="comparison-toolbar" aria-label="Comparison navigation controls">
-        <button id="comparisonPrev" class="comparison-nav-btn" type="button" aria-label="Previous comparison">&#8592; Prev</button>
         <div id="comparisonJumps" class="comparison-jumps" aria-label="Comparison quick navigation"></div>
-        <button id="comparisonNext" class="comparison-nav-btn" type="button" aria-label="Next comparison">Next &#8594;</button>
       </div>
-      <p class="comparison-hint">Swipe left/right, or use buttons and quick tabs.</p>
+      <div class="comparison-nav-wrap">
+      <button id="comparisonPrev" class="comparison-side-arrow comparison-side-arrow--left" type="button" aria-label="Previous comparison">
+        <span aria-hidden="true">&#10094;</span>
+      </button>
       <div class="comparison-carousel">
 
       <div class="comparison-board surface">
@@ -685,6 +686,10 @@
           </div>
         </div>
       </div>
+      </div>
+      <button id="comparisonNext" class="comparison-side-arrow comparison-side-arrow--right" type="button" aria-label="Next comparison">
+        <span aria-hidden="true">&#10095;</span>
+      </button>
       </div>
     </section>
 

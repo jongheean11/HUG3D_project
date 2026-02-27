@@ -293,36 +293,18 @@ p {
 }
 
 .comparison-toolbar {
-  margin: 2px 0 8px;
+  margin: 2px 0 10px;
   display: flex;
   align-items: center;
-  gap: 8px;
-}
-
-.comparison-nav-btn {
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--surface-2) 90%, transparent);
-  color: var(--text);
-  padding: 7px 12px;
-  font: inherit;
-  font-size: 0.85rem;
-  font-weight: 700;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.comparison-nav-btn:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
 }
 
 .comparison-jumps {
-  flex: 1;
+  width: 100%;
   display: flex;
   gap: 7px;
   overflow-x: auto;
   padding-bottom: 2px;
+  scroll-behavior: smooth;
 }
 
 .comparison-jump {
@@ -344,17 +326,54 @@ p {
   color: var(--accent);
 }
 
-.comparison-hint {
-  margin: 0 0 10px;
-  color: var(--muted);
-  font-size: 0.84rem;
+.comparison-nav-wrap {
+  position: relative;
+}
+
+.comparison-side-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 5;
+  width: 42px;
+  height: 42px;
+  border: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-2) 88%, transparent);
+  color: var(--text);
+  display: grid;
+  place-items: center;
+  font: inherit;
+  font-size: 1.15rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 12px 24px rgba(7, 14, 11, 0.18);
+  transform: translateY(-50%);
+  backdrop-filter: blur(6px);
+}
+
+.comparison-side-arrow:hover {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+  color: var(--accent);
+}
+
+.comparison-side-arrow:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.comparison-side-arrow--left {
+  left: -12px;
+}
+
+.comparison-side-arrow--right {
+  right: -12px;
 }
 
 .comparison-carousel {
   display: flex;
   gap: 14px;
   overflow-x: auto;
-  padding-bottom: 8px;
+  padding: 0 8px 8px;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
@@ -754,9 +773,9 @@ code {
     grid-template-columns: 1fr;
   }
 
-  .comparison-toolbar {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
+  .comparison-side-arrow {
+    width: 38px;
+    height: 38px;
   }
 
   .comparison-carousel > .comparison-board,
@@ -802,13 +821,16 @@ code {
     grid-template-columns: 1fr;
   }
 
-  .comparison-toolbar {
-    grid-template-columns: 1fr 1fr;
+  .comparison-side-arrow--left {
+    left: 2px;
   }
 
-  .comparison-jumps {
-    grid-column: 1 / -1;
-    order: 3;
+  .comparison-side-arrow--right {
+    right: 2px;
+  }
+
+  .comparison-carousel {
+    padding: 0 14px 8px;
   }
 
   .comparison-row,
