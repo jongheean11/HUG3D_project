@@ -18,6 +18,20 @@
   <meta name="twitter:description" content="Single-image, interaction-aware, textured multi-human 3D reconstruction.">
   <meta name="twitter:image" content="assets/img/og-image.png">
 
+  <script>
+    (() => {
+      if ('scrollRestoration' in window.history) {
+        window.history.scrollRestoration = 'manual';
+      }
+
+      if (window.location.hash) {
+        window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+
+      window.scrollTo(0, 0);
+    })();
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -632,6 +646,6 @@
     </div>
   </div>
 
-  <script src="assets/js/main.js?v=20260409-2"></script>
+  <script src="assets/js/main.js?v=20260409-4"></script>
 </body>
 </html>

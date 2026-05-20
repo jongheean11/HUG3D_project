@@ -1,5 +1,28 @@
 (() => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const resetPageScroll = () => {
+    window.scrollTo(0, 0);
+  };
+
+  if ('scrollRestoration' in window.history) {
+    window.history.scrollRestoration = 'manual';
+  }
+
+  if (window.location.hash) {
+    window.history.replaceState(null, '', window.location.pathname + window.location.search);
+  }
+
+  resetPageScroll();
+
+  requestAnimationFrame(resetPageScroll);
+  window.setTimeout(resetPageScroll, 0);
+  window.setTimeout(resetPageScroll, 250);
+
+  window.addEventListener('pageshow', (event) => {
+    resetPageScroll();
+  });
+
+  window.addEventListener('load', resetPageScroll, { once: true });
 
   const initInlineAutoplayVideos = () => {
     const cards = Array.from(document.querySelectorAll('.media-card[data-lb-type="video"]'));
@@ -172,19 +195,23 @@
       return button;
     });
 
-    const updateControls = (scrollBehavior = 'auto') => {
+    const centerActiveJumpButton = (button, scrollBehavior = 'auto') => {
+      const targetLeft = button.offsetLeft - (jumpContainer.clientWidth - button.offsetWidth) / 2;
+      jumpContainer.scrollTo({
+        left: Math.max(0, targetLeft),
+        behavior: scrollBehavior,
+      });
+    };
+
+    const updateControls = (scrollBehavior = 'auto', shouldCenterJumpButton = true) => {
       jumpButtons.forEach((button, index) => {
         button.classList.toggle('is-active', index === activeIndex);
       });
       prevButton.disabled = activeIndex <= 0;
       nextButton.disabled = activeIndex >= cards.length - 1;
       const activeButton = jumpButtons[activeIndex];
-      if (activeButton) {
-        activeButton.scrollIntoView({
-          inline: 'center',
-          block: 'nearest',
-          behavior: scrollBehavior,
-        });
+      if (activeButton && shouldCenterJumpButton) {
+        centerActiveJumpButton(activeButton, scrollBehavior);
       }
     };
 
@@ -251,7 +278,7 @@
       });
     }
 
-    updateControls('auto');
+    updateControls('auto', false);
   };
 
   initComparisonCarousel();
